@@ -61,6 +61,13 @@ make seed                   # (opcional) popular dados quando seeds forem criada
 
 Depois disso, acesse [`http://localhost:8080`](http://localhost:8080) para validar que o Laravel está respondendo.
 
+## Sanctum + CORS (SPA Mode)
+
+- `FRONTEND_URL` define a origem SPA liberada via CORS (default `http://localhost:5173`).
+- `CORS_ALLOWED_ORIGINS` e `SANCTUM_STATEFUL_DOMAINS` aceitam lista separada por vírgulas; ajuste se publicar em outro domínio (inclua porta do SPA).
+- O middleware de API está configurado para modo stateful do Sanctum; rotas `auth:sanctum` usarão sessão + cookies.
+- Endpoint de verificação: `GET /api/v1/health` (sem auth). Para testar autenticação stateful, use `GET /api/v1/me` autenticado.
+
 ## Troubleshooting
 
 - **Permissão negada no docker socket**: confirme que seu usuário está no grupo `docker` (veja bloco “Build das imagens”).
