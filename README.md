@@ -53,6 +53,7 @@ make build                  # primeira vez ou após alterações em Dockerfile
 make up                     # sobe php/nginx/mysql
 make migrate                # cria estrutura de banco
 make seed                   # popular dados fake (opcional)
+make key                    # gerar a chave do laravel APP KEY
 ```
 
 Depois disso, acesse [`http://localhost:8080`](http://localhost:8080) para validar que o Laravel está respondendo.
@@ -71,6 +72,7 @@ Depois disso, acesse [`http://localhost:8080`](http://localhost:8080) para valid
 ## Troubleshooting
 
 - **Permissão negada no docker socket**: confirme que seu usuário está no grupo `docker` (veja bloco “Build das imagens”).
+- **Missing APP_KEY**: execute `docker compose exec php php artisan key:generate` para definir a chave e evitar `MissingAppKeyException`.
 
 ## Rotas principais (V1)
 
@@ -101,6 +103,12 @@ Execute `make seed` para popular:
 - Gere a documentação após alterações: `make swagger`.
 - Acesse `http://localhost:8080/api/documentation` para visualizar a UI.
 - As anotações ficam nos controllers/resources e em `SwaggerController`.
+
+## Coleção Postman
+
+- Arquivo `postman/facilconsulta.postman_collection.json`.
+- Importar no Postman, ajustar variáveis `base_url`, `token` e `today`.
+- Requests prontos para Auth, Patient, Doctors e Appointments.
 
 ## phpMyAdmin
 
