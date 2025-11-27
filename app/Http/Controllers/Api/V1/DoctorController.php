@@ -8,6 +8,7 @@ use App\Services\DoctorService;
 use App\Traits\Http\HandlesExceptionsTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use OpenApi\Annotations as OA;
 
 class DoctorController extends Controller
 {
@@ -17,6 +18,24 @@ class DoctorController extends Controller
     {
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/v1/doctors",
+     *     tags={"Doctors"},
+     *     summary="Listar médicos",
+     *     @OA\Parameter(name="specialty", in="query", required=false, @OA\Schema(type="string")),
+     *     @OA\Parameter(name="active", in="query", required=false, @OA\Schema(type="boolean")),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de médicos",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="data", type="object",
+     *                 @OA\Property(property="doctors", type="array", @OA\Items(ref="#/components/schemas/Doctor"))
+     *             )
+     *         )
+     *     )
+     * )
+     */
     public function index(Request $request): JsonResponse
     {
         return $this->safeCall(function () use ($request) {
@@ -28,6 +47,24 @@ class DoctorController extends Controller
         });
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/v1/doctors/available",
+     *     tags={"Doctors"},
+     *     summary="Listar médicos disponíveis por data",
+     *     @OA\Parameter(name="date", in="query", @OA\Schema(type="string", format="date")),
+     *     @OA\Parameter(name="specialty", in="query", @OA\Schema(type="string")),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Médicos disponíveis",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="data", type="object",
+     *                 @OA\Property(property="doctors", type="array", @OA\Items(ref="#/components/schemas/Doctor"))
+     *             )
+     *         )
+     *     )
+     * )
+     */
     public function available(Request $request): JsonResponse
     {
         return $this->safeCall(function () use ($request) {

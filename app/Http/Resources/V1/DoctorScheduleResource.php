@@ -4,7 +4,20 @@ namespace App\Http\Resources\V1;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Schema(
+ *     schema="DoctorSchedule",
+ *     type="object",
+ *     @OA\Property(property="id", type="integer", example=1),
+ *     @OA\Property(property="weekday", type="integer", example=1),
+ *     @OA\Property(property="start_time", type="string", example="09:00"),
+ *     @OA\Property(property="end_time", type="string", example="12:00"),
+ *     @OA\Property(property="slot_duration", type="integer", example=30),
+ *     @OA\Property(property="is_active", type="boolean")
+ * )
+ */
 class DoctorScheduleResource extends JsonResource
 {
     /**
