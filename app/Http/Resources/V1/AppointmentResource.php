@@ -4,7 +4,27 @@ namespace App\Http\Resources\V1;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Schema(
+ *     schema="Appointment",
+ *     type="object",
+     @OA\Property(property="id", type="integer"),
+ *     @OA\Property(property="status", type="string"),
+ *     @OA\Property(property="patient_id", type="integer"),
+ *     @OA\Property(property="doctor_id", type="integer"),
+ *     @OA\Property(property="doctor_schedule_id", type="integer", nullable=true),
+ *     @OA\Property(property="scheduled_date", type="string", format="date"),
+ *     @OA\Property(property="scheduled_time", type="string", example="10:00"),
+ *     @OA\Property(property="notes", type="string", nullable=true),
+ *     @OA\Property(property="canceled_at", type="string", format="date-time", nullable=true),
+ *     @OA\Property(property="completed_at", type="string", format="date-time", nullable=true),
+ *     @OA\Property(property="doctor", ref="#/components/schemas/Doctor"),
+ *     @OA\Property(property="patient", ref="#/components/schemas/Patient"),
+ *     @OA\Property(property="schedule", ref="#/components/schemas/DoctorSchedule")
+ * )
+ */
 class AppointmentResource extends JsonResource
 {
     /**

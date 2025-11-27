@@ -11,6 +11,7 @@ use App\Services\AppointmentService;
 use App\Traits\Http\HandlesExceptionsTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use OpenApi\Annotations as OA;
 
 class AppointmentController extends Controller
 {
@@ -20,6 +21,35 @@ class AppointmentController extends Controller
     {
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/v1/appointments",
+     *     tags={"Appointments"},
+     *     summary="Criar agendamento",
+     *     security={{"sanctum":{}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"patient_id","doctor_id","scheduled_date","scheduled_time"},
+     *             @OA\Property(property="patient_id", type="integer"),
+     *             @OA\Property(property="doctor_id", type="integer"),
+     *             @OA\Property(property="doctor_schedule_id", type="integer", nullable=true),
+     *             @OA\Property(property="scheduled_date", type="string", format="date"),
+     *             @OA\Property(property="scheduled_time", type="string", example="10:00"),
+     *             @OA\Property(property="notes", type="string", nullable=true)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Agendamento criado",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="data", type="object",
+     *                 @OA\Property(property="appointment", ref="#/components/schemas/Appointment")
+     *             )
+     *         )
+     *     )
+     * )
+     */
     public function store(StoreAppointmentRequest $request): JsonResponse
     {
         return $this->safeCall(function () use ($request) {
@@ -31,6 +61,25 @@ class AppointmentController extends Controller
         });
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/v1/appointments/doctor/{doctorId}",
+     *     tags={"Appointments"},
+     *     summary="Agendamentos por médico",
+     *     security={{"sanctum":{}}},
+     *     @OA\Parameter(name="doctorId", in="path", required=true, @OA\Schema(type="integer")),
+     *     @OA\Parameter(name="status", in="query", @OA\Schema(type="string")),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista paginada",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="data", type="object",
+     *                 @OA\Property(property="appointments", type="array", @OA\Items(ref="#/components/schemas/Appointment"))
+     *             )
+     *         )
+     *     )
+     * )
+     */
     public function doctorAppointments(Request $request, int $doctorId): JsonResponse
     {
         return $this->safeCall(function () use ($request, $doctorId) {
@@ -46,6 +95,25 @@ class AppointmentController extends Controller
         });
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/v1/appointments/patient/{patientId}",
+     *     tags={"Appointments"},
+     *     summary="Agendamentos por paciente",
+     *     security={{"sanctum":{}}},
+     *     @OA\Parameter(name="patientId", in="path", required=true, @OA\Schema(type="integer")),
+     *     @OA\Parameter(name="status", in="query", @OA\Schema(type="string")),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista paginada",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="data", type="object",
+     *                 @OA\Property(property="appointments", type="array", @OA\Items(ref="#/components/schemas/Appointment"))
+     *             )
+     *         )
+     *     )
+     * )
+     */
     public function patientAppointments(Request $request, int $patientId): JsonResponse
     {
         return $this->safeCall(function () use ($request, $patientId) {
@@ -61,6 +129,24 @@ class AppointmentController extends Controller
         });
     }
 
+    /**
+     * @OA\Patch(
+     *     path="/api/v1/appointments/{appointment}/status",
+     *     tags={"Appointments"},
+     *     summary="Atualizar status do agendamento",
+     *     security={{"sanctum":{}}},
+     *     @OA\Parameter(name="appointment", in="path", required=true, @OA\Schema(type="integer")),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"status"},
+     *             @OA\Property(property="status", type="string", example="confirmed"),
+     *             @OA\Property(property="notes", type="string", nullable=true)
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="Status atualizado")
+     * )
+     */
     public function updateStatus(UpdateAppointmentStatusRequest $request, Appointment $appointment): JsonResponse
     {
         return $this->safeCall(function () use ($request, $appointment) {
