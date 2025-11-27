@@ -44,6 +44,7 @@ make build                    # primeiro build (ou sempre que alterar Dockerfile
 | `make fix`     | Executa o Pint (PSR-12) para padronizar o código.                 |
 | `make optimize`| Roda `php artisan optimize`.                                      |
 | `make swagger` | Gera documentação Swagger (L5 Swagger).                           |
+| `make key`     | Gera APP KEY do laravel no env                                    |
 
 ## Fluxo completo para subir localmente
 
