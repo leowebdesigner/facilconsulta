@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 COMPOSE := docker compose
 
-.PHONY: build up down restart logs bash migrate seed test fix optimize swagger key
+.PHONY: build up down restart logs bash install migrate seed test fix optimize swagger key
 
 build:
 	$(COMPOSE) build
@@ -20,6 +20,9 @@ logs:
 
 bash:
 	$(COMPOSE) exec php bash
+
+install:
+	$(COMPOSE) exec php composer install
 
 migrate:
 	$(COMPOSE) exec php php artisan migrate --force
