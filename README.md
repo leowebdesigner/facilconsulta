@@ -38,6 +38,7 @@ make build                    # primeiro build (ou sempre que alterar Dockerfile
 | `make restart` | Reinicia o stack.                                                 |
 | `make logs`    | Acompanha logs combinados (`docker compose logs -f`).             |
 | `make bash`    | Abre bash no container PHP para rodar artesãos/pacotes manualmente. |
+| `make install` | Executa `composer install` dentro do container PHP.               |
 | `make migrate` | Executa `php artisan migrate --force` dentro do container PHP.    |
 | `make seed`    | Executa `php artisan db:seed --force`.                            |
 | `make test`    | Roda `php artisan test`.                                          |
@@ -52,6 +53,7 @@ make build                    # primeiro build (ou sempre que alterar Dockerfile
 cp .env.example .env        # ajuste APP_KEY com `php artisan key:generate` se quiser offline
 make build                  # primeira vez ou após alterações em Dockerfile
 make up                     # sobe php/nginx/mysql
+make install                # instala dependências PHP dentro do container
 make migrate                # cria estrutura de banco
 make seed                   # popular dados fake (opcional)
 make key                    # gerar a chave do laravel APP KEY
