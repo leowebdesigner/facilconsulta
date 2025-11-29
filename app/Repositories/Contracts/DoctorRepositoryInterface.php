@@ -18,5 +18,5 @@ interface DoctorRepositoryInterface
 
     public function list(array $filters = [], int $perPage = 15): LengthAwarePaginator;
 
-    public function listAvailable(string $date, ?string $specialty = null): Collection;
+    public function listAvailable(string $date, ?string $specialty = null, int $days = 5): Collection;
 }

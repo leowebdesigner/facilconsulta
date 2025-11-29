@@ -23,6 +23,7 @@ class DoctorFactory extends Factory
             'document' => fake()->unique()->numerify('###########'),
             'crm' => 'CRM'.fake()->unique()->numerify('#####'),
             'specialty' => fake()->randomElement(['Cardiology', 'Dermatology', 'Pediatrics']),
+            'address' => fake()->streetAddress().', '.fake()->city(),
             'experience_years' => fake()->numberBetween(1, 25),
             'bio' => fake()->sentence(),
             'is_active' => true,

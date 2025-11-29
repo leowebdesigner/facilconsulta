@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('document')->nullable()->unique();
             $table->string('crm')->nullable()->unique();
             $table->string('specialty')->nullable()->index();
+            $table->string('address')->nullable();
             $table->unsignedTinyInteger('experience_years')->default(0);
             $table->text('bio')->nullable();
             $table->boolean('is_active')->default(true)->index();
