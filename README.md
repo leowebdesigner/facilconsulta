@@ -87,18 +87,18 @@ Depois disso, acesse [`http://localhost:8080`](http://localhost:8080) para valid
 | `/api/v1/auth/logout` | POST | Logout (precisa Sanctum) |
 | `/api/v1/patient/profile` | GET | Perfil do paciente autenticado |
 | `/api/v1/patient/appointments/upcoming` | GET | Próximos agendamentos do paciente |
-| `/api/v1/doctors` | GET | Lista de médicos (filtros `specialty`, `active`) |
-| `/api/v1/doctors/available` | GET | Médicos disponíveis por data/especialidade |
+| `/api/v1/doctors` | GET | Lista de médicos (inclui `address`, filtros `specialty`, `active`) |
+| `/api/v1/doctors/available` | GET | Médicos disponíveis por data/especialidade, retornando slots diários |
 | `/api/v1/appointments` | POST | Cria um agendamento |
 | `/api/v1/appointments/doctor/{doctorId}` | GET | Lista agendamentos por médico |
-| `/api/v1/appointments/patient/{patientId}` | GET | Lista agendamentos por paciente |
+| `/api/v1/appointments/patient/{patientId}` | GET | Lista agendamentos por paciente (inclui nome/especialidade/endereço do médico) |
 | `/api/v1/appointments/{appointment}/status` | PATCH | Atualiza status (confirmar/cancelar/completar) |
 
 ## Dados fake
 
 Execute `make seed` para popular:
 - 10 pacientes ativos.
-- 5 médicos com 3 horários cada.
+- 5 médicos com 3 horários cada (3 deles fixos, com nomes e endereços reais utilizados no mockup fornecido).
 - Agendamentos de exemplo (futuros) conectando pacientes/médicos/horários.
 
 # Swagger / API Docs

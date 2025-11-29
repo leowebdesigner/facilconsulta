@@ -17,8 +17,8 @@ class DoctorService
         return $this->doctors->list($filters, $perPage);
     }
 
-    public function listAvailable(string $date, ?string $specialty = null): Collection
+    public function listAvailable(string $date, ?string $specialty = null, int $days = 5): Collection
     {
-        return $this->doctors->listAvailable($date, $specialty);
+        return $this->doctors->listAvailable($date, $specialty, $days);
     }
 }

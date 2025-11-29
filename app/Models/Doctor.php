@@ -21,6 +21,7 @@ class Doctor extends Model
         'document',
         'crm',
         'specialty',
+        'address',
         'experience_years',
         'bio',
         'is_active',
