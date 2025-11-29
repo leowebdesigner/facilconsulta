@@ -28,6 +28,7 @@ class EloquentAppointmentRepository implements AppointmentRepositoryInterface
     public function listForDoctor(int $doctorId, array $filters = [], int $perPage = 15): LengthAwarePaginator
     {
         return Appointment::query()
+            ->with(['doctor', 'patient', 'schedule'])
             ->forDoctor($doctorId)
             ->status($filters['status'] ?? null)
             ->upcoming()
@@ -37,6 +38,7 @@ class EloquentAppointmentRepository implements AppointmentRepositoryInterface
     public function listForPatient(int $patientId, array $filters = [], int $perPage = 15): LengthAwarePaginator
     {
         return Appointment::query()
+            ->with(['doctor', 'patient', 'schedule'])
             ->forPatient($patientId)
             ->status($filters['status'] ?? null)
             ->orderByDesc('scheduled_date')

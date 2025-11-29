@@ -16,7 +16,30 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $patients = Patient::factory()->count(10)->create();
-        $doctors = Doctor::factory()->count(5)->create();
+
+        $doctorProfiles = collect([
+            [
+                'name' => 'Dr. Marcos Eduardo Avancini Schenatto',
+                'specialty' => 'Cardiologia',
+                'address' => 'Rua Marechal Deodoro, 755, sala 104, Pelotas',
+            ],
+            [
+                'name' => 'Dr. Carlos Osorio Magalhaes',
+                'specialty' => 'Cardiologia',
+                'address' => 'Rua Princesa Isabel, 280, sala 206, Pelotas',
+            ],
+            [
+                'name' => 'Dra. Carla Vandame Da Silva',
+                'specialty' => 'Cardiologia',
+                'address' => 'Rua Alberto Borges Soveral, 54, Pelotas',
+            ],
+        ]);
+
+        $doctors = $doctorProfiles->map(fn (array $profile) => Doctor::factory()->create($profile));
+
+        if ($doctors->count() < 5) {
+            $doctors = $doctors->merge(Doctor::factory()->count(5 - $doctors->count())->create());
+        }
         $scheduleTemplates = collect([
             ['weekday' => 1, 'start_time' => '09:00', 'end_time' => '12:00'],
             ['weekday' => 2, 'start_time' => '13:00', 'end_time' => '17:00'],

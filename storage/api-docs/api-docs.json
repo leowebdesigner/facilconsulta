@@ -516,6 +516,16 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "days",
+                        "in": "query",
+                        "description": "Quantidade de dias consecutivos a partir da data inicial",
+                        "schema": {
+                            "type": "integer",
+                            "maximum": 14,
+                            "minimum": 1
+                        }
                     }
                 ],
                 "responses": {
@@ -672,6 +682,15 @@
                         "format": "date-time",
                         "nullable": true
                     },
+                    "doctor_name": {
+                        "type": "string"
+                    },
+                    "doctor_specialty": {
+                        "type": "string"
+                    },
+                    "doctor_address": {
+                        "type": "string"
+                    },
                     "doctor": {
                         "$ref": "#/components/schemas/Doctor"
                     },
@@ -707,6 +726,9 @@
                     "specialty": {
                         "type": "string"
                     },
+                    "address": {
+                        "type": "string"
+                    },
                     "experience_years": {
                         "type": "integer"
                     },
@@ -721,6 +743,29 @@
                         "items": {
                             "$ref": "#/components/schemas/DoctorSchedule"
                         }
+                    },
+                    "availability": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "date": {
+                                    "type": "string",
+                                    "format": "date"
+                                },
+                                "weekday": {
+                                    "type": "integer"
+                                },
+                                "slots": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "example": "13:00"
+                                    }
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "nullable": true
                     },
                     "created_at": {
                         "type": "string",
